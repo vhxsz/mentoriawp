@@ -3,29 +3,829 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>William Paixão - Mentoria de Casais Cristão</title>
+    <title>Mentoria Aliança Inquebável - Reconstruindo Casamentos</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
-    <meta name="description" content="Mentoria cristã para casais - Transforme seu relacionamento com William Paixão. 15+ anos de experiência, 500+ casais transformados.">
-    <meta name="keywords" content="mentoria casais, casamento cristão, relacionamento, William Paixão, terapia casal">
+    <meta name="description" content="Mentoria Aliança Inquebável - Para casais que querem reconstruir conexão emocional e espiritual. Ciclos de 4 encontros estruturados.">
     <link rel="icon" type="image/png" href="galery/logo.png">
+
+    <style>
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #FAF7F2;
+            color: #2C2C2C;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        html, body { margin: 0; padding: 0; }
+
+        /* ===== COLORS ===== */
+        :root {
+            --gold: #C9A84C;
+            --gold-light: #E2C97E;
+            --dark: #1A1A2E;
+            --cream: #FAF7F2;
+            --cream-card: #F3EDE3;
+            --text: #2C2C2C;
+            --text-soft: #5C5C5C;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: var(--cream);
+            border-bottom: 1px solid #EDE6D8;
+            padding: 8px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            transform: translateY(0);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .header.hidden {
+            transform: translateY(-100%);
+        }
+        .header.scrolled {
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            background: rgba(250,247,242,0.97);
+            backdrop-filter: blur(8px);
+        }
+        body { padding-top: 58px; }
+        .nav {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .nav-logo { height: 34px; }
+        .nav-menu { list-style: none; display: flex; gap: 28px; }
+        .nav-menu a { text-decoration: none; color: var(--text-soft); font-size: 0.9rem; font-weight: 500; transition: color .2s; }
+        .nav-menu a:hover { color: var(--gold); }
+        .btn-nav {
+            background: var(--gold);
+            color: #fff !important;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-weight: 600 !important;
+        }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+        .hamburger span { width: 24px; height: 2px; background: var(--text); border-radius: 2px; }
+
+        /* ===== HERO ===== */
+        .hero {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 56px 24px 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: flex-start;
+            min-height: 420px;
+        }
+        .hero-left {}
+        .hero-left h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            color: var(--text);
+            margin-bottom: 20px;
+        }
+        .hero-left p {
+            font-size: 1rem;
+            color: var(--text-soft);
+            line-height: 1.7;
+            margin-bottom: 6px;
+        }
+        .hero-divider {
+            width: 48px;
+            height: 3px;
+            background: var(--gold);
+            margin-top: 28px;
+            border-radius: 2px;
+        }
+        .hero-right {
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+        .hero-right img {
+            width: 100%;
+            max-width: 360px;
+            border-radius: 16px;
+            object-fit: cover;
+            object-position: top;
+            max-height: 400px;
+        }
+
+        /* ===== PROPOSTA CARD ===== */
+        .proposta-wrap {
+            max-width: 900px;
+            margin: 48px auto 0;
+            padding: 0 24px;
+        }
+        .proposta-card {
+            background: var(--cream-card);
+            border-radius: 16px;
+            padding: 32px 36px;
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+        .proposta-icon {
+            flex-shrink: 0;
+            width: 88px;
+            height: 88px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .proposta-icon svg {
+            width: 80px;
+            height: 80px;
+        }
+        .proposta-text h2 {
+            font-size: 1.45rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+        .proposta-text p {
+            font-size: 0.95rem;
+            color: var(--text-soft);
+            line-height: 1.7;
+        }
+        .proposta-text p .gold { color: var(--gold); font-weight: 600; }
+
+        /* ===== BENEFÍCIOS ===== */
+        .beneficios-section {
+            max-width: 900px;
+            margin: 52px auto 0;
+            padding: 0 24px;
+        }
+        .beneficios-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 36px;
+            justify-content: center;
+        }
+        .beneficios-label::before,
+        .beneficios-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #DDD4C4;
+        }
+        .beneficios-label span {
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: var(--gold);
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+        .beneficios-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 36px 24px;
+        }
+        .beneficio-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 14px;
+        }
+        .beneficio-icon-wrap {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            border: 1.5px solid #DDD4C4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+        }
+        .beneficio-icon-wrap i {
+            font-size: 1.6rem;
+            color: var(--text-soft);
+        }
+        .beneficio-item p {
+            font-size: 0.88rem;
+            color: var(--text-soft);
+            line-height: 1.5;
+        }
+
+        /* ===== CICLOS INFO ===== */
+        .ciclos-info-wrap {
+            max-width: 900px;
+            margin: 48px auto 0;
+            padding: 0 24px;
+        }
+        .ciclos-info {
+            background: var(--cream-card);
+            border-radius: 12px;
+            padding: 22px 28px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        .ciclos-info i {
+            font-size: 2rem;
+            color: var(--gold);
+            flex-shrink: 0;
+        }
+        .ciclos-info p {
+            font-size: 0.95rem;
+            color: var(--text-soft);
+            line-height: 1.6;
+        }
+        .ciclos-info p span {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        /* ===== INVESTIMENTO ===== */
+        .investimento-section {
+            max-width: 900px;
+            margin: 52px auto 0;
+            padding: 0 24px;
+        }
+        .investimento-label {
+            text-align: center;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            color: var(--text);
+            text-transform: uppercase;
+            margin-bottom: 28px;
+        }
+        .investimento-grid {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 0;
+            align-items: center;
+        }
+        .plano-card {
+            background: var(--cream-card);
+            border-radius: 16px;
+            padding: 28px 28px 32px;
+        }
+        .plano-titulo {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text);
+            margin-bottom: 18px;
+            line-height: 1.4;
+        }
+        .plano-icon-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 10px;
+        }
+        .plano-icon-row i {
+            font-size: 2.2rem;
+            color: var(--text-soft);
+        }
+        .plano-aprox {
+            font-size: 0.82rem;
+            color: var(--text-soft);
+        }
+        .plano-preco {
+            font-size: 2.6rem;
+            font-weight: 800;
+            color: var(--text);
+            line-height: 1.1;
+            margin: 2px 0 6px;
+        }
+        .plano-sub {
+            font-size: 0.8rem;
+            color: var(--text-soft);
+            line-height: 1.5;
+        }
+        .plano-checklist {
+            margin-top: 16px;
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+        .plano-checklist li {
+            font-size: 0.85rem;
+            color: var(--text-soft);
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        .plano-checklist li::before {
+            content: '✓';
+            color: var(--gold);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .plano-separador {
+            padding: 0 24px;
+            text-align: center;
+        }
+        .plano-ou {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: #fff;
+            border: 1.5px solid #DDD4C4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--text-soft);
+        }
+
+        /* ===== CTA FINAL ===== */
+        .cta-final {
+            background: var(--dark);
+            margin: 52px 24px 0;
+            padding: 28px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            border-radius: 24px 24px 0 0;
+        }
+        .cta-final i {
+            font-size: 1.8rem;
+            color: var(--gold);
+            flex-shrink: 0;
+        }
+        .cta-final-text p {
+            font-size: 1rem;
+            color: #fff;
+            font-weight: 400;
+        }
+        .cta-final-text p.gold {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--dark);
+            border-top: none;
+            padding: 40px 24px 24px;
+            border-radius: 0;
+        }
+        .footer-content {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 32px;
+        }
+        .footer-info h3 { color: #fff; font-size: 1.1rem; margin-bottom: 8px; }
+        .footer-info p { color: rgba(255,255,255,.55); font-size: 0.88rem; line-height: 1.6; }
+        .footer-links h4, .footer-contato h4 { color: #fff; font-size: 0.9rem; margin-bottom: 12px; }
+        .footer-links ul { list-style: none; }
+        .footer-links ul li { margin-bottom: 8px; }
+        .footer-links ul li a { color: rgba(255,255,255,.55); text-decoration: none; font-size: 0.88rem; }
+        .footer-links ul li a:hover { color: var(--gold); }
+        .footer-contato p { color: rgba(255,255,255,.55); font-size: 0.88rem; margin-bottom: 6px; }
+        .footer-contato p i { margin-right: 6px; color: var(--gold); }
+        .footer-bottom {
+            max-width: 900px;
+            margin: 0 auto;
+            border-top: 1px solid rgba(255,255,255,.08);
+            padding-top: 20px;
+            text-align: center;
+            color: rgba(255,255,255,.35);
+            font-size: 0.82rem;
+        }
+
+        /* ===== WHATSAPP FLOAT ===== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 28px;
+            right: 24px;
+            z-index: 999;
+        }
+        .whatsapp-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #25D366;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 20px rgba(37,211,102,.4);
+            transition: transform .2s, box-shadow .2s;
+        }
+        .whatsapp-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 26px rgba(37,211,102,.5); }
+        .whatsapp-icon { font-size: 1.3rem; }
+
+        /* ===== LOADING ===== */
+        .loading-screen {
+            position: fixed; inset: 0;
+            background: var(--cream);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 9999;
+            transition: opacity .4s, visibility .4s;
+        }
+        .loading-screen.hidden { opacity: 0; visibility: hidden; }
+        .loading-content { text-align: center; }
+        .loading-logo { font-size: 3rem; color: var(--gold); margin-bottom: 16px; }
+        .loading-text { color: var(--text-soft); margin-bottom: 16px; font-size: 0.9rem; }
+        .loading-bar { width: 200px; height: 4px; background: #EDE6D8; border-radius: 4px; overflow: hidden; }
+        .loading-progress { height: 100%; background: var(--gold); border-radius: 4px; animation: load 1.2s ease-out forwards; }
+        @keyframes load { from { width: 0; } to { width: 100%; } }
+
+        /* ===== ANIMAÇÕES ===== */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(32px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeLeft {
+            from { opacity: 0; transform: translateX(-32px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes fadeRight {
+            from { opacity: 0; transform: translateX(32px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.88); }
+            to   { opacity: 1; transform: scale(1); }
+        }
+        @keyframes dividerGrow {
+            from { width: 0; }
+            to   { width: 48px; }
+        }
+        @keyframes shimmer {
+            0%   { background-position: -400px 0; }
+            100% { background-position: 400px 0; }
+        }
+        @keyframes pulse-gold {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(201,168,76,.35); }
+            50%       { box-shadow: 0 0 0 10px rgba(201,168,76,0); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50%       { transform: translateY(-6px); }
+        }
+
+        /* Reveal classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity .65s cubic-bezier(.22,1,.36,1), transform .65s cubic-bezier(.22,1,.36,1);
+        }
+        .reveal.from-left  { transform: translateX(-32px); }
+        .reveal.from-right { transform: translateX(32px); }
+        .reveal.scale      { transform: scale(0.9); }
+        .reveal.visible {
+            opacity: 1;
+            transform: none;
+        }
+        .reveal-stagger .beneficio-item {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity .5s cubic-bezier(.22,1,.36,1), transform .5s cubic-bezier(.22,1,.36,1);
+        }
+        .reveal-stagger.visible .beneficio-item:nth-child(1) { opacity:1; transform:none; transition-delay:.05s; }
+        .reveal-stagger.visible .beneficio-item:nth-child(2) { opacity:1; transform:none; transition-delay:.13s; }
+        .reveal-stagger.visible .beneficio-item:nth-child(3) { opacity:1; transform:none; transition-delay:.21s; }
+        .reveal-stagger.visible .beneficio-item:nth-child(4) { opacity:1; transform:none; transition-delay:.29s; }
+        .reveal-stagger.visible .beneficio-item:nth-child(5) { opacity:1; transform:none; transition-delay:.37s; }
+        .reveal-stagger.visible .beneficio-item:nth-child(6) { opacity:1; transform:none; transition-delay:.45s; }
+
+        /* Hero animações */
+        .hero-left h1 { animation: fadeLeft .8s cubic-bezier(.22,1,.36,1) both; }
+        .hero-left p:nth-of-type(1) { animation: fadeLeft .8s .1s cubic-bezier(.22,1,.36,1) both; }
+        .hero-left p:nth-of-type(2) { animation: fadeLeft .8s .2s cubic-bezier(.22,1,.36,1) both; }
+        .hero-left p:nth-of-type(3) { animation: fadeLeft .8s .3s cubic-bezier(.22,1,.36,1) both; }
+        .hero-divider { animation: dividerGrow .7s .5s ease both; }
+        .hero-cta-btn  { animation: fadeUp .7s .45s cubic-bezier(.22,1,.36,1) both; }
+        .hero-right img { animation: fadeRight .9s .1s cubic-bezier(.22,1,.36,1) both; }
+
+        /* Ícone proposta float */
+        .proposta-icon svg { animation: float 4s ease-in-out infinite; }
+
+        /* Hover nos benefícios */
+        .beneficio-icon-wrap {
+            transition: background .25s, border-color .25s, transform .25s;
+        }
+        .beneficio-item:hover .beneficio-icon-wrap {
+            background: var(--cream-card);
+            border-color: var(--gold);
+            transform: scale(1.08);
+        }
+        .beneficio-item:hover .beneficio-icon-wrap i { color: var(--gold); }
+        .beneficio-icon-wrap i { transition: color .25s; }
+
+        /* ===== HERO CTA BUTTON ===== */
+        .hero-cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 28px;
+            background: var(--gold);
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            padding: 14px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(201,168,76,.35);
+            animation: pulse-gold 2.5s 1.2s infinite;
+            transition: transform .2s, box-shadow .2s, background .2s;
+        }
+        .hero-cta-btn:hover {
+            background: #b8932f;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 28px rgba(201,168,76,.45);
+        }
+        .hero-cta-btn i { font-size: 1.1rem; transition: transform .2s; }
+        .hero-cta-btn:hover i { transform: translateX(4px); }
+
+        /* ===== PRICING CARDS MELHORADOS ===== */
+        .investimento-grid { align-items: stretch; }
+        .plano-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 32px;
+            border: 1.5px solid #EDE6D8;
+            position: relative;
+            overflow: hidden;
+            transition: transform .3s, box-shadow .3s, border-color .3s;
+        }
+        .plano-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--gold-light), var(--gold));
+            opacity: 0;
+            transition: opacity .3s;
+        }
+        .plano-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px rgba(0,0,0,.1);
+            border-color: var(--gold-light);
+        }
+        .plano-card:hover::before { opacity: 1; }
+        .plano-card.destaque {
+            background: var(--dark);
+            border-color: var(--gold);
+        }
+        .plano-card.destaque::before { opacity: 1; }
+        .plano-card.destaque .plano-titulo,
+        .plano-card.destaque .plano-preco { color: #fff; }
+        .plano-card.destaque .plano-aprox,
+        .plano-card.destaque .plano-sub { color: rgba(255,255,255,.55); }
+        .plano-card.destaque .plano-icon-row i { color: var(--gold); }
+        .plano-card.destaque .plano-checklist li { color: rgba(255,255,255,.75); }
+        .badge-destaque {
+            display: inline-block;
+            background: var(--gold);
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            padding: 4px 12px;
+            border-radius: 50px;
+            margin-bottom: 14px;
+        }
+        .plano-preco {
+            background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+            background-size: 400px 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s linear infinite;
+        }
+        .plano-card.destaque .plano-preco {
+            -webkit-text-fill-color: transparent;
+        }
+        .btn-comecar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            margin-top: 24px;
+            padding: 13px 20px;
+            border-radius: 50px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-decoration: none;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            background: transparent;
+            cursor: pointer;
+            transition: background .25s, color .25s, transform .2s;
+        }
+        .btn-comecar:hover {
+            background: var(--gold);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+        .btn-comecar.solid {
+            background: var(--gold);
+            color: #fff;
+        }
+        .btn-comecar.solid:hover {
+            background: #b8932f;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .nav-menu { display: none; }
+            .hamburger { display: flex; }
+
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 36px 20px 0;
+            }
+            .hero-right { order: -1; }
+            .hero-right img { max-height: 280px; width: 100%; }
+            .hero-left h1 { font-size: 1.8rem; }
+
+            .proposta-card {
+                flex-direction: column;
+                text-align: center;
+                padding: 28px 20px;
+            }
+
+            .beneficios-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 28px 16px;
+            }
+
+            .investimento-grid {
+                grid-template-columns: 1fr;
+            }
+            .plano-separador { padding: 16px 0; }
+
+            .footer-content { grid-template-columns: 1fr; gap: 24px; }
+
+            .cta-final { flex-direction: column; text-align: center; }
+        }
+
+        /* ===== DEPOIMENTOS ===== */
+        .avaliacoes-section {
+            max-width: 900px;
+            margin: 64px auto 0;
+            padding: 0 24px;
+        }
+        .depo-grid {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 20px;
+        }
+        .depo-card {
+            background: #fff;
+            border: 1.5px solid #EDE6D8;
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: transform .3s, box-shadow .3s;
+        }
+        .depo-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,.08); }
+        .depo-stars { color: var(--gold); font-size: 1rem; letter-spacing: 2px; }
+        .depo-card p { font-size: 0.88rem; color: var(--text-soft); line-height: 1.6; font-style: italic; flex: 1; }
+        .depo-autor { display: flex; flex-direction: column; gap: 2px; border-top: 1px solid #EDE6D8; padding-top: 12px; }
+        .depo-autor strong { font-size: 0.85rem; color: var(--text); }
+        .depo-autor span { font-size: 0.78rem; color: var(--text-soft); }
+
+        /* ===== CONTATO ===== */
+        .contato-section {
+            max-width: 900px;
+            margin: 64px auto 0;
+            padding: 0 24px;
+        }
+        .contato-inner {
+            background: var(--cream-card);
+            border-radius: 20px;
+            padding: 48px 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: start;
+        }
+        .tag-gold {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 12px;
+        }
+        .contato-texto h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 12px; line-height: 1.3; }
+        .contato-texto p { font-size: 0.92rem; color: var(--text-soft); margin-bottom: 20px; line-height: 1.7; }
+        .contato-info-list { display: flex; flex-direction: column; gap: 10px; }
+        .contato-info-item { display: flex; align-items: center; gap: 10px; font-size: 0.88rem; color: var(--text-soft); }
+        .contato-info-item i { color: var(--gold); font-size: 1.1rem; }
+        .contato-form { display: flex; flex-direction: column; gap: 12px; }
+        .contato-form input,
+        .contato-form select,
+        .contato-form textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1.5px solid #DDD4C4;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.88rem;
+            color: var(--text);
+            background: #fff;
+            outline: none;
+            transition: border-color .2s;
+        }
+        .contato-form input:focus,
+        .contato-form select:focus,
+        .contato-form textarea:focus { border-color: var(--gold); }
+        .contato-form textarea { resize: none; }
+
+        /* ===== FAQ ===== */
+        .faq-section {
+            max-width: 900px;
+            margin: 64px auto 0;
+            padding: 0 24px;
+        }
+        .faq-list { display: flex; flex-direction: column; gap: 0; border-radius: 16px; overflow: hidden; border: 1.5px solid #EDE6D8; }
+        .faq-item { border-bottom: 1px solid #EDE6D8; background: #fff; }
+        .faq-item:last-child { border-bottom: none; }
+        .faq-q {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 24px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            cursor: pointer;
+            user-select: none;
+            transition: background .2s;
+        }
+        .faq-q:hover { background: var(--cream-card); }
+        .faq-ico { font-size: 1.4rem; color: var(--gold); font-weight: 400; transition: transform .3s; flex-shrink: 0; }
+        .faq-item.open .faq-ico { transform: rotate(45deg); }
+        .faq-a {
+            max-height: 0;
+            overflow: hidden;
+            font-size: 0.9rem;
+            color: var(--text-soft);
+            line-height: 1.7;
+            padding: 0 24px;
+            transition: max-height .35s ease, padding .35s ease;
+        }
+        .faq-item.open .faq-a { max-height: 200px; padding: 0 24px 18px; }
+
+        /* ===== FOOTER FIX ===== */
+        .footer { margin-bottom: 0; }
+        html { background: var(--dark); }
+
+        @media (max-width: 768px) {
+            .depo-grid { grid-template-columns: 1fr; }
+            .contato-inner { grid-template-columns: 1fr; padding: 32px 20px; gap: 32px; }
+        }
+    </style>
 </head>
 <body>
+
     <!-- Header -->
     <header class="header">
         <nav class="nav">
             <div class="nav-brand">
-                <img src="galery/logo.png" alt="William Paixão - Mentoria de Casais" class="nav-logo">
+                <img src="galery/logo.png" alt="Aliança Inquebável" class="nav-logo">
             </div>
             <ul class="nav-menu">
-                <li><a href="#sobre">Sobre</a></li>
-                <li><a href="#metodologia">Metodologia</a></li>
-                <li><a href="#avaliacoes">Avaliações</a></li>
-                <li><a href="#contato">Contato</a></li>
-                <li><a href="#comprar" class="btn-nav">Quero Participar</a></li>
+                <li><a href="#proposta">A Mentoria</a></li>
+                <li><a href="#processo">O Processo</a></li>
+                <li><a href="#investimento">Investimento</a></li>
+                <li><a href="#investimento" class="btn-nav">Quero Participar</a></li>
             </ul>
             <div class="hamburger">
                 <span></span>
@@ -35,567 +835,270 @@
         </nav>
     </header>
 
-    <!-- Hero Section -->
+    <!-- SEÇÃO 1: HERO / PROBLEMA -->
     <section class="hero">
-        <div class="hero-content">
-            <h1>Transforme Seu Casamento em uma <span class="highlight">Aliança Inquebrável</span></h1>
-            <div class="hero-image-mobile">
-                <img src="galery/32088.jpg" alt="William Paixão - Mentoria de Casais" class="hero-foto">
-            </div>
-            <p>Mentoria cristã especializada para casais que desejam fortalecer sua união através dos princípios bíblicos e comunicação eficaz.</p>
-            <div class="hero-stats">
-                <div class="stat">
-                    <span class="number">500+</span>
-                    <span class="label">Casais Transformados</span>
-                </div>
-                <div class="stat">
-                    <span class="number">15+</span>
-                    <span class="label">Anos de Experiência</span>
-                </div>
-                <div class="stat">
-                    <span class="number">95%</span>
-                    <span class="label">Taxa de Sucesso</span>
-                </div>
-            </div>
-            <div class="hero-cta">
-                <a href="#comprar" class="btn-primary">Iniciar Mentoria Agora</a>
-                <a href="#sobre" class="btn-secondary">Conhecer Metodologia</a>
-            </div>
+        <div class="hero-left">
+            <h1>Casamentos não acabam de repente.</h1>
+            <p>Eles se desgastam no silêncio.</p>
+            <p>Na distância.</p>
+            <p>Na exaustão emocional acumulada durante anos.</p>
+            <div class="hero-divider"></div>
+            <a href="#investimento" class="hero-cta-btn">
+                Quero Começar <i class="bi bi-arrow-right"></i>
+            </a>
         </div>
-        <div class="hero-image">
-            <img src="galery/32088.jpg" alt="William Paixão - Mentoria de Casais" class="hero-foto">
+        <div class="hero-right">
+            <img src="galery/32088.jpg" alt="Casal em distância emocional">
         </div>
     </section>
 
-    <!-- Seção Sobre -->
-    <section id="sobre" class="sobre">
-        <div class="container">
-            <div class="sobre-content">
-                <div class="sobre-image">
-                    <img src="galery/32085.jpg" alt="William Paixão - Mentor de Casais" class="mentor-sobre">
-                </div>
-                <div class="sobre-text">
-                    <span class="tag">Sobre o Mentor</span>
-                    <h2>William Paixão</h2>
-                    <p>Mentor de casais há mais de 15 anos, especializado em restauração de relacionamentos através dos princípios bíblicos. Formado em Teologia e Terapeuta Cognitivo Comportamental, já transformou a vida de mais de 500 casais.</p>
-                    <p>Minha missão é ajudar casais a construírem relacionamentos sólidos, baseados no amor de Cristo, comunicação eficaz e propósito compartilhado.</p>
-                    <div class="sobre-badges">
-                        <div class="badge">
-                            <i class="bi bi-book icon"></i>
-                            <span>Teólogo</span>
-                        </div>
-                        <div class="badge">
-                            <i class="bi bi-heart icon"></i>
-                            <span>Mentor de Casais</span>
-                        </div>
-                    </div>
-                </div>
+    <!-- SEÇÃO 2: PROPOSTA DE VALOR -->
+    <div class="proposta-wrap reveal" id="proposta">
+        <div class="proposta-card">
+            <div class="proposta-icon">
+                <!-- Ícone: mãos formando coração -->
+                <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M40 58C40 58 14 44 14 28C14 21 19.5 16 26 16C30.5 16 34.5 18.5 37 22C39.5 18.5 43.5 16 48 16C54.5 16 60 21 60 28C60 44 40 58 40 58Z" stroke="#C9A84C" stroke-width="2.5" fill="none"/>
+                    <path d="M28 36C32 40 36 44 40 48C44 44 48 40 52 36" stroke="#C9A84C" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M20 52C24 48 28 46 32 46" stroke="#C9A84C" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M60 52C56 48 52 46 48 46" stroke="#C9A84C" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <div class="proposta-text">
+                <h2>Reconstruindo conexão emocional e espiritual.</h2>
+                <p>A <span class="gold">Mentoria Aliança Inquebável</span> foi criada para casais que não querem apenas parar de discutir. Querem voltar a se sentir próximos novamente.</p>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- Seção Benefícios -->
-    <section class="beneficios">
-        <div class="container">
-            <div class="section-header">
-                <span class="tag">Por Que Escolher</span>
-                <h2>Transforme Seu Casamento</h2>
-                <p>Descubra os benefícios de uma mentoria cristã especializada</p>
+    <!-- SEÇÃO 3: O QUE VOCÊS TERÃO -->
+    <section class="beneficios-section" id="processo">
+        <div class="beneficios-label">
+            <span>O que vocês terão durante o processo:</span>
+        </div>
+        <div class="beneficios-grid reveal-stagger">
+            <div class="beneficio-item">
+                <div class="beneficio-icon-wrap">
+                    <i class="bi bi-person"></i>
+                </div>
+                <p>Direcionamento emocional individualizado</p>
             </div>
-            <div class="beneficios-grid">
-                <div class="beneficio-card">
-                    <div class="icon-box"><i class="bi bi-chat-dots"></i></div>
-                    <h3>Comunicação Eficaz</h3>
-                    <p>Aprenda técnicas de comunicação não-violenta e escuta ativa para resolver conflitos com amor.</p>
+            <div class="beneficio-item">
+                <div class="beneficio-icon-wrap">
+                    <i class="bi bi-diagram-3"></i>
                 </div>
-                <div class="beneficio-card">
-                    <div class="icon-box"><i class="bi bi-book"></i></div>
-                    <h3>Fundamento Bíblico</h3>
-                    <p>Fortaleça seu casamento com princípios sólidos da Palavra de Deus aplicados ao dia a dia.</p>
+                <p>Exercícios práticos da TCC</p>
+            </div>
+            <div class="beneficio-item">
+                <div class="beneficio-icon-wrap">
+                    <i class="bi bi-bullseye"></i>
                 </div>
-                <div class="beneficio-card">
-                    <div class="icon-box"><i class="bi bi-heart-fill"></i></div>
-                    <h3>Intimidade Restaurada</h3>
-                    <p>Reconecte-se emocionalmente e espiritualmente, reavivando a chama do relacionamento.</p>
+                <p>Acompanhamento estratégico</p>
+            </div>
+            <div class="beneficio-item">
+                <div class="beneficio-icon-wrap">
+                    <i class="bi bi-book"></i>
                 </div>
-                <div class="beneficio-card">
-                    <div class="icon-box"><i class="bi bi-bullseye"></i></div>
-                    <h3>Propósito Compartilhado</h3>
-                    <p>Descubram juntos o propósito de Deus para o casamento e caminhem na mesma direção.</p>
+                <p>Aplicação bíblica para reconstrução do vínculo</p>
+            </div>
+            <div class="beneficio-item">
+                <div class="beneficio-icon-wrap">
+                    <i class="bi bi-lightning"></i>
                 </div>
-                <div class="beneficio-card">
-                    <div class="icon-box"><i class="bi bi-shield-check"></i></div>
-                    <h3>Proteção Espiritual</h3>
-                    <p>Fortaleçam a vida espiritual do casal e protejam o casamento de ataques externos.</p>
+                <p>Ferramentas para interromper ciclos destrutivos</p>
+            </div>
+            <div class="beneficio-item">
+                <div class="beneficio-icon-wrap">
+                    <i class="bi bi-chat-dots"></i>
                 </div>
-                <div class="beneficio-card">
-                    <div class="icon-box"><i class="bi bi-graph-up-arrow"></i></div>
-                    <h3>Crescimento Contínuo</h3>
-                    <p>Ferramentas práticas para manter o casamento crescendo e evoluindo constantemente.</p>
-                </div>
+                <p>Clareza emocional e comunicação restaurada</p>
             </div>
         </div>
     </section>
 
-    <!-- Seção Metodologia -->
-    <section id="metodologia" class="metodologia">
-        <div class="container">
-            <div class="section-header">
-                <span class="tag">Como Funciona</span>
-                <h2>Metodologia Comprovada</h2>
-                <p>Um processo estruturado para transformar seu casamento em 4 etapas</p>
-            </div>
-            <div class="processo-timeline">
-                <div class="processo-item">
-                    <div class="processo-numero">01</div>
-                    <div class="processo-content">
-                        <h3>Diagnóstico</h3>
-                        <p>Avaliação completa do relacionamento, identificando pontos fortes e áreas de melhoria através de conversas individuais e em casal.</p>
-                    </div>
-                </div>
-                <div class="processo-item">
-                    <div class="processo-numero">02</div>
-                    <div class="processo-content">
-                        <h3>Planejamento</h3>
-                        <p>Criação de um plano personalizado baseado nos princípios bíblicos e nas necessidades específicas do casal.</p>
-                    </div>
-                </div>
-                <div class="processo-item">
-                    <div class="processo-numero">03</div>
-                    <div class="processo-content">
-                        <h3>Aplicação</h3>
-                        <p>Sessões semanais com ferramentas práticas, exercícios e acompanhamento contínuo para implementar mudanças reais.</p>
-                    </div>
-                </div>
-                <div class="processo-item">
-                    <div class="processo-numero">04</div>
-                    <div class="processo-content">
-                        <h3>Consolidação</h3>
-                        <p>Fortalecimento dos novos hábitos e criação de um plano de manutenção para crescimento contínuo do relacionamento.</p>
-                    </div>
-                </div>
-            </div>
+    <!-- SEÇÃO 4: CICLOS ESTRUTURADOS -->
+    <div class="ciclos-info-wrap reveal">
+        <div class="ciclos-info">
+            <i class="bi bi-calendar3"></i>
+            <p>Mudanças profundas não acontecem em apenas uma conversa. Por isso, a mentoria acontece em <span>ciclos de 4 encontros estruturados.</span></p>
         </div>
-    </section>
+    </div>
 
-    <!-- Seção Diferenciais -->
-    <section class="diferenciais">
-        <div class="container">
-            <div class="section-header">
-                <span class="tag">Por Que Somos Diferentes</span>
-                <h2>Diferenciais da Mentoria</h2>
-            </div>
-            <div class="diferenciais-grid">
-                <div class="diferencial-item">
-                    <div class="diferencial-icon"><i class="bi bi-book"></i></div>
-                    <h3>Base Bíblica Sólida</h3>
-                    <p>Toda mentoria fundamentada na Palavra de Deus e nos princípios cristãos.</p>
-                </div>
-                <div class="diferencial-item">
-                    <div class="diferencial-icon"><i class="bi bi-people"></i></div>
-                    <h3>Atendimento Personalizado</h3>
-                    <p>Cada casal recebe atenção individual com plano customizado.</p>
-                </div>
-                <div class="diferencial-item">
-                    <div class="diferencial-icon"><i class="bi bi-whatsapp"></i></div>
-                    <h3>Suporte Contínuo</h3>
-                    <p>Acompanhamento via WhatsApp entre as sessões para dúvidas e apoio.</p>
-                </div>
-                <div class="diferencial-item">
-                    <div class="diferencial-icon"><i class="bi bi-check-circle"></i></div>
-                    <h3>Resultados Práticos</h3>
-                    <p>Foco em mudanças reais e mensuráveis no relacionamento.</p>
-                </div>
-                <div class="diferencial-item">
-                    <div class="diferencial-icon"><i class="bi bi-lock"></i></div>
-                    <h3>Confidencialidade Total</h3>
-                    <p>Ambiente seguro e sigiloso para compartilhar desafios.</p>
-                </div>
-                <div class="diferencial-item">
-                    <div class="diferencial-icon"><i class="bi bi-journal-text"></i></div>
-                    <h3>Material Exclusivo</h3>
-                    <p>Acesso a workbooks, exercícios e recursos complementares.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- SEÇÃO 5: INVESTIMENTO -->
+    <section class="investimento-section reveal" id="investimento">
+        <div class="investimento-label">Investimento</div>
+        <div class="investimento-grid">
 
-    <!-- Seção Avaliações -->
-    <section id="avaliacoes" class="avaliacoes">
-        <div class="container">
-            <div class="section-header">
-                <span class="tag">Depoimentos</span>
-                <h2>O Que Nossos Casais Dizem</h2>
-                <p>Histórias reais de transformação e restauração</p>
-            </div>
-            <div class="testimonials-wrapper">
-                <div class="testimonials-column" data-duration="15">
-                    <div class="testimonial-card">
-                        <div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-                        <p>"A mentoria salvou nosso casamento! Aprendemos a nos comunicar com amor e respeito. Hoje somos mais unidos do que nunca."</p>
-                        <div class="cliente">
-                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=80&h=80&fit=crop&crop=face" alt="Maria Silva" class="cliente-avatar">
-                            <div class="cliente-info">
-                                <h4>Carlos & Maria Silva</h4>
-                                <span>Casados há 12 anos</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-card">
-                        <div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-                        <p>"Estávamos à beira do divórcio. A mentoria nos ensinou a perdoar e reconstruir nossa intimidade. Gratidão eterna!"</p>
-                        <div class="cliente">
-                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" alt="Pedro Costa" class="cliente-avatar">
-                            <div class="cliente-info">
-                                <h4>Pedro & Lucia Costa</h4>
-                                <span>Casados há 15 anos</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-card">
-                        <div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-                        <p>"Recomendamos para todos os casais! A mentoria fortaleceu nossa base espiritual e emocional."</p>
-                        <div class="cliente">
-                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face" alt="Camila Rocha" class="cliente-avatar">
-                            <div class="cliente-info">
-                                <h4>Daniel & Camila Rocha</h4>
-                                <span>Casados há 4 anos</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonials-column hidden-mobile" data-duration="19">
-                    <div class="testimonial-card">
-                        <div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-                        <p>"William nos ajudou a encontrar o propósito de Deus para nosso casamento. Transformação completa em nossa família!"</p>
-                        <div class="cliente">
-                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face" alt="João Santos" class="cliente-avatar">
-                            <div class="cliente-info">
-                                <h4>João & Ana Santos</h4>
-                                <span>Casados há 8 anos</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-card">
-                        <div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-                        <p>"O acompanhamento personalizado fez toda diferença. Hoje temos um casamento próspero e abençoado por Deus."</p>
-                        <div class="cliente">
-                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face" alt="Priscila Oliveira" class="cliente-avatar">
-                            <div class="cliente-info">
-                                <h4>Rafael & Priscila Oliveira</h4>
-                                <span>Casados há 10 anos</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-card">
-                        <div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-                        <p>"A metodologia bíblica nos deu ferramentas práticas que usamos até hoje. Nosso relacionamento nunca esteve tão forte!"</p>
-                        <div class="cliente">
-                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop&crop=face" alt="Marcos Lima" class="cliente-avatar">
-                            <div class="cliente-info">
-                                <h4>Marcos & Fernanda Lima</h4>
-                                <span>Casados há 6 anos</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonials-column hidden-tablet" data-duration="17">
-                    <div class="testimonial-card">
-                        <div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-                        <p>"As sessões nos ensinaram a orar juntos e buscar a Deus como casal. Nossa intimidade espiritual foi restaurada."</p>
-                        <div class="cliente">
-                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&crop=face" alt="Juliana Mendes" class="cliente-avatar">
-                            <div class="cliente-info">
-                                <h4>Roberto & Juliana Mendes</h4>
-                                <span>Casados há 9 anos</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-card">
-                        <div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-                        <p>"Aprendemos a resolver conflitos de forma saudável e a crescer juntos. Recomendamos de coração!"</p>
-                        <div class="cliente">
-                            <img src="https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=80&h=80&fit=crop&crop=face" alt="Thiago Alves" class="cliente-avatar">
-                            <div class="cliente-info">
-                                <h4>Thiago & Carla Alves</h4>
-                                <span>Casados há 7 anos</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-card">
-                        <div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-                        <p>"A mentoria nos preparou para os desafios da vida a dois. Hoje enfrentamos tudo unidos, com fé e amor."</p>
-                        <div class="cliente">
-                            <img src="https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=80&h=80&fit=crop&crop=face" alt="Beatriz Ferreira" class="cliente-avatar">
-                            <div class="cliente-info">
-                                <h4>Lucas & Beatriz Ferreira</h4>
-                                <span>Casados há 3 anos</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Seção Contato -->
-    <section id="contato" class="contato">
-        <div class="container">
-            <div class="section-header">
-                <span class="tag">Entre em Contato</span>
-                <h2>Vamos Conversar Sobre Seu Casamento</h2>
-                <p>Agende uma conversa inicial gratuita para conhecer nossa metodologia</p>
-            </div>
-            <div class="contato-content">
-                <div class="contato-info">
-                    <h3>Informações de Contato</h3>
-                    <div class="info-item">
-                        <div class="info-icon"><i class="bi bi-whatsapp"></i></div>
-                        <div>
-                            <h4>WhatsApp</h4>
-                            <p>(21) 96592-5216</p>
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-icon"><i class="bi bi-envelope"></i></div>
-                        <div>
-                            <h4>E-mail</h4>
-                            <p>Williampaixaotcc@gmail.com<</p>
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-icon"><i class="bi bi-geo-alt"></i></div>
-                        <div>
-                            <h4>Localização</h4>
-                            <p>Atendimento Online</p>
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-icon"><i class="bi bi-clock"></i></div>
-                        <div>
-                            <h4>Horário</h4>
-                            <p>Segunda a Sexta: 9h às 20h</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="contato-form">
-                    <form class="form">
-                        <div class="form-group">
-                            <input type="text" placeholder="Nome do Casal" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" placeholder="E-mail" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="tel" placeholder="WhatsApp" required>
-                        </div>
-                        <div class="form-group">
-                            <select required>
-                                <option value="">Tempo de Casamento</option>
-                                <option value="0-2">0 a 2 anos</option>
-                                <option value="3-5">3 a 5 anos</option>
-                                <option value="6-10">6 a 10 anos</option>
-                                <option value="10+">Mais de 10 anos</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <textarea placeholder="Conte um pouco sobre os desafios do seu casamento..." rows="4" required></textarea>
-                        </div>
-                        <button type="submit" class="btn-primary">Agendar Conversa Gratuita</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Seção Produtos -->
-    <section id="comprar" class="produtos">
-        <div class="container">
-            <div class="section-header">
-                <span class="tag">Invista no Seu Casamento</span>
-                <h2>Escolha Sua Mentoria</h2>
-                <p>Duas opções para transformar seu relacionamento</p>
-            </div>
-            <div class="produtos-content">
-                <div class="mentor-image">
-                    <img src="galery/32084.jpg" alt="William Paixão - Mentor de Casais" class="mentor-foto">
-                </div>
-                <div class="produtos-grid">
-                    <div class="produto-card">
-                        <div class="produto-header">
-                            <h3>Mentoria em Grupo</h3>
-                            <div class="preco">
-                                <span class="parcela">10x R$ 99,70</span>
-                                <span class="valor">R$ 997</span>
-                            </div>
-                        </div>
-                        <div class="produto-content">
-                            <ul class="beneficios-lista">
-                                <li>✓ Sessões em grupo com outros casais</li>
-                                <li>✓ Aprendizado colaborativo</li>
-                                <li>✓ Material digital exclusivo</li>
-                                <li>✓ Suporte via WhatsApp</li>
-                                <li>✓ Exercícios práticos</li>
-                                <li>✓ Garantia de 30 dias</li>
-                            </ul>
-                            <a href="#contato" class="btn-produto">Quero Esta Mentoria</a>
-                        </div>
-                    </div>
-                    <div class="produto-card destaque">
-                        <div class="badge-popular">Mais Procurada</div>
-                        <div class="produto-header">
-                            <h3>Mentoria Individual</h3>
-                            <div class="preco">
-                                <span class="parcela">10x R$ 299,70</span>
-                                <span class="valor">R$ 2.997</span>
-                            </div>
-                        </div>
-                        <div class="produto-content">
-                            <ul class="beneficios-lista">
-                                <li>✓ 10 encontros individuais</li>
-                                <li>✓ Atendimento 100% personalizado</li>
-                                <li>✓ Plano customizado para o casal</li>
-                                <li>✓ Suporte prioritário</li>
-                                <li>✓ Material físico + digital</li>
-                                <li>✓ Acompanhamento pós-mentoria</li>
-                                <li>✓ Garantia de 30 dias</li>
-                            </ul>
-                            <a href="#contato" class="btn-produto">Quero Esta Mentoria</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="garantia">
-                <div class="garantia-content">
-                    <div class="garantia-icon"><i class="bi bi-shield-check"></i></div>
+            <!-- Plano 1 -->
+            <div class="plano-card reveal from-left">
+                <p class="plano-titulo">Ciclos estruturados de<br>4 encontros</p>
+                <div class="plano-icon-row">
+                    <i class="bi bi-people"></i>
                     <div>
-                        <h3>Garantia de 30 Dias</h3>
-                        <p>Se não ficarem satisfeitos com os resultados, devolvemos 100% do seu investimento sem questionamentos.</p>
+                        <p class="plano-aprox">Aproximadamente</p>
+                        <p class="plano-preco">R$ 300</p>
+                        <p class="plano-sub">por sessão<br>ou menos de R$ 150 por pessoa,<br>por encontro</p>
                     </div>
                 </div>
+                <a href="https://wa.me/5521965925216?text=Quero+o+ciclo+de+4+encontros!" target="_blank" class="btn-comecar">Começar <i class="bi bi-arrow-right"></i></a>
+            </div>
+
+            <!-- Separador visual sem OU -->
+            <div class="plano-separador"></div>
+
+            <!-- Plano 2 -->
+            <div class="plano-card destaque reveal from-right">
+                <span class="badge-destaque">Mais completo</span>
+                <p class="plano-titulo">Plano completo<br>12 encontros estruturados</p>
+                <div class="plano-icon-row">
+                    <i class="bi bi-star-fill"></i>
+                    <div>
+                        <p class="plano-aprox">Aproximadamente</p>
+                        <p class="plano-preco">R$ 291</p>
+                        <p class="plano-sub">por encontro</p>
+                    </div>
+                </div>
+                <ul class="plano-checklist">
+                    <li>Exercícios práticos</li>
+                    <li>Direcionamento emocional</li>
+                    <li>Aplicação da TCC + princípios bíblicos</li>
+                    <li>Acompanhamento durante o processo</li>
+                </ul>
+                <a href="https://wa.me/5521965925216?text=Quero+o+plano+completo+de+12+encontros!" target="_blank" class="btn-comecar solid">Começar agora <i class="bi bi-arrow-right"></i></a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- DEPOIMENTOS -->
+    <section id="avaliacoes" class="avaliacoes-section reveal">
+        <div class="beneficios-label" style="margin-bottom:40px">
+            <span>O que os casais dizem</span>
+        </div>
+        <div class="depo-grid">
+            <div class="depo-card">
+                <div class="depo-stars">★★★★★</div>
+                <p>"A mentoria salvou nosso casamento. Aprendemos a nos comunicar com amor e respeito. Hoje somos mais unidos do que nunca."</p>
+                <div class="depo-autor"><strong>Carlos &amp; Maria Silva</strong><span>Casados há 12 anos</span></div>
+            </div>
+            <div class="depo-card">
+                <div class="depo-stars">★★★★★</div>
+                <p>"Estávamos à beira do divórcio. A mentoria nos ensinou a perdoar e reconstruir nossa intimidade. Gratidão eterna!"</p>
+                <div class="depo-autor"><strong>Pedro &amp; Lucia Costa</strong><span>Casados há 15 anos</span></div>
+            </div>
+            <div class="depo-card">
+                <div class="depo-stars">★★★★★</div>
+                <p>"A base bíblica aliada à TCC fez toda a diferença. Nosso relacionamento nunca esteve tão sólido e próximo."</p>
+                <div class="depo-autor"><strong>Rafael &amp; Priscila Oliveira</strong><span>Casados há 10 anos</span></div>
             </div>
         </div>
     </section>
 
-    <!-- Seção FAQ -->
-    <section class="faq">
-        <div class="container">
-            <div class="section-header">
-                <span class="tag">Dúvidas Frequentes</span>
-                <h2>Perguntas e Respostas</h2>
+    <!-- CONTATO / CTA COM FORM -->
+    <section id="contato" class="contato-section reveal">
+        <div class="contato-inner">
+            <div class="contato-texto">
+                <span class="tag-gold">Dê o primeiro passo</span>
+                <h2>Vamos conversar sobre o seu casamento?</h2>
+                <p>Agende uma conversa inicial e descubra como a mentoria pode ajudar vocês a se reconectarem.</p>
+                <div class="contato-info-list">
+                    <div class="contato-info-item"><i class="bi bi-whatsapp"></i><span>(21) 96592-5216</span></div>
+                    <div class="contato-info-item"><i class="bi bi-envelope"></i><span>Williampaixaotcc@gmail.com</span></div>
+                    <div class="contato-info-item"><i class="bi bi-camera-video"></i><span>Atendimento Online</span></div>
+                </div>
+                <a href="https://wa.me/5521965925216?text=Ol%C3%A1!+Quero+agendar+uma+conversa+sobre+a+mentoria." target="_blank" class="btn-comecar solid" style="display:inline-flex;width:auto;margin-top:24px;">
+                    Agendar pelo WhatsApp <i class="bi bi-whatsapp"></i>
+                </a>
             </div>
-            <div class="faq-list">
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>Como funciona a mentoria online?</h3>
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>As sessões são realizadas via videoconferência, com duração de 1h30 cada. Você recebe material de apoio e tem acesso ao WhatsApp para dúvidas entre as sessões.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>Qual a duração do programa?</h3>
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>O programa completo tem duração de 3 meses, com sessões semanais. Inclui acompanhamento pós-mentoria por mais 30 dias.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>É necessário que ambos participem?</h3>
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Sim, a participação de ambos os cônjuges é fundamental para o sucesso da mentoria. Trabalhamos com o casal como uma unidade.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>Qual o investimento?</h3>
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>O investimento varia conforme o plano escolhido. Oferecemos facilidades de pagamento. Agende uma conversa para conhecer os valores.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>Há garantia de resultados?</h3>
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Oferecemos garantia de 30 dias. Se não ficarem satisfeitos, devolvemos 100% do investimento, sem questionamentos.</p>
-                    </div>
-                </div>
+            <div class="contato-form-wrap">
+                <form class="contato-form" onsubmit="return false;">
+                    <input type="text" placeholder="Nome do Casal" required>
+                    <input type="email" placeholder="E-mail" required>
+                    <input type="tel" placeholder="WhatsApp" required>
+                    <select required>
+                        <option value="">Tempo de Casamento</option>
+                        <option>0 a 2 anos</option>
+                        <option>3 a 5 anos</option>
+                        <option>6 a 10 anos</option>
+                        <option>Mais de 10 anos</option>
+                    </select>
+                    <textarea placeholder="Conte um pouco sobre os desafios do seu casamento..." rows="3"></textarea>
+                    <button type="submit" class="btn-comecar solid">Enviar Mensagem <i class="bi bi-send"></i></button>
+                </form>
             </div>
         </div>
     </section>
 
-    <!-- Barra de Navegação Mobile -->
-    <nav class="mobile-nav">
-        <a href="#sobre" class="mobile-nav-item">
-            <i class="bi bi-person"></i>
-            <span>Sobre</span>
-        </a>
-        <a href="#metodologia" class="mobile-nav-item">
-            <i class="bi bi-list-check"></i>
-            <span>Método</span>
-        </a>
-        <a href="#avaliacoes" class="mobile-nav-item">
-            <i class="bi bi-star"></i>
-            <span>Avaliações</span>
-        </a>
-        <a href="#comprar" class="mobile-nav-item">
-            <i class="bi bi-cart"></i>
-            <span>Comprar</span>
-        </a>
-        <a href="#contato" class="mobile-nav-item">
-            <i class="bi bi-chat"></i>
-            <span>Contato</span>
-        </a>
-    </nav>
+    <!-- FAQ -->
+    <section class="faq-section reveal">
+        <div class="beneficios-label" style="margin-bottom:36px">
+            <span>Dúvidas frequentes</span>
+        </div>
+        <div class="faq-list">
+            <div class="faq-item">
+                <div class="faq-q">Como funciona a mentoria online? <span class="faq-ico">+</span></div>
+                <div class="faq-a">As sessões são realizadas via videoconferência, com duração de 1h30 cada. Você recebe material de apoio e tem acesso ao WhatsApp para dúvidas entre as sessões.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">É necessário que os dois participem? <span class="faq-ico">+</span></div>
+                <div class="faq-a">Sim, a participação de ambos os cônjuges é fundamental. Trabalhamos com o casal como uma unidade.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">Qual a diferença entre os planos? <span class="faq-ico">+</span></div>
+                <div class="faq-a">O ciclo de 4 encontros é ideal para casais que querem começar com um processo mais curto. O plano completo de 12 encontros oferece acompanhamento mais profundo e contínuo.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">Há garantia de resultados? <span class="faq-ico">+</span></div>
+                <div class="faq-a">Oferecemos garantia de satisfação. Se não ficarem satisfeitos após os primeiros encontros, devolvemos o investimento sem questionamentos.</div>
+            </div>
+        </div>
+    </section>
 
-    <!-- Botão Flutuante WhatsApp -->
-    <div class="whatsapp-float">
-        <a href="https://wa.me/5521965925216?text=Olá! Gostaria de saber mais sobre a mentoria de casais." target="_blank" class="whatsapp-btn">
-            <i class="bi bi-whatsapp whatsapp-icon"></i>
-            <span class="whatsapp-text">Fale Conosco</span>
-        </a>
+    <!-- SEÇÃO CTA FINAL ESCURO -->
+    <div class="cta-final reveal">
+        <i class="bi bi-shield-check"></i>
+        <div class="cta-final-text">
+            <p>Não trabalhamos soluções rápidas.</p>
+            <p class="gold">Trabalhamos reconstrução consistente.</p>
+        </div>
     </div>
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-info">
-                    <h3>William Paixão</h3>
-                    <p>Mentoria de Casais Cristão</p>
-                    <p>Transformando relacionamentos há mais de 15 anos</p>
-                </div>
-                <div class="footer-links">
-                    <h4>Links Rápidos</h4>
-                    <ul>
-                        <li><a href="#sobre">Sobre</a></li>
-                        <li><a href="#metodologia">Metodologia</a></li>
-                        <li><a href="#avaliacoes">Avaliações</a></li>
-                        <li><a href="#contato">Contato</a></li>
-                    </ul>
-                </div>
-                <div class="footer-contato">
-                    <h4>Contato</h4>
-                    <p><i class="bi bi-whatsapp"></i> (21) 96592-5216</p>
-                    <p><i class="bi bi-envelope"></i> Williampaixaotcc@gmail.com</p>
-                    <p><i class="bi bi-geo-alt"></i> Atendimento Online</p>
-                </div>
+        <div class="footer-content">
+            <div class="footer-info">
+                <h3>Mentoria Aliança Inquebável</h3>
+                <p>Reconstruindo conexão emocional e espiritual em casamentos</p>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 William Paixão - Mentoria de Casais. Todos os direitos reservados.</p>
+            <div class="footer-links">
+                <h4>Links Rápidos</h4>
+                <ul>
+                    <li><a href="#proposta">A Mentoria</a></li>
+                    <li><a href="#processo">O Processo</a></li>
+                    <li><a href="#investimento">Investimento</a></li>
+                    <li><a href="#avaliacoes">Depoimentos</a></li>
+                    <li><a href="#contato">Contato</a></li>
+                </ul>
+            </div>
+            <div class="footer-contato">
+                <h4>Contato</h4>
+                <p><i class="bi bi-whatsapp"></i> (21) 96592-5216</p>
+                <p><i class="bi bi-envelope"></i> Williampaixaotcc@gmail.com</p>
+                <p><i class="bi bi-geo-alt"></i> Atendimento Online</p>
             </div>
         </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Mentoria Aliança Inquebável. Todos os direitos reservados.</p>
+        </div>
     </footer>
+
+    <!-- Botão Flutuante WhatsApp -->
+    <div class="whatsapp-float">
+        <a href="https://wa.me/5521965925216?text=Olá! Quero saber mais sobre a Mentoria Aliança Inquebável." target="_blank" class="whatsapp-btn">
+            <i class="bi bi-whatsapp whatsapp-icon"></i>
+            <span class="whatsapp-text">Fale Conosco</span>
+        </a>
+    </div>
 
     <!-- Loading Screen -->
     <div class="loading-screen" id="loadingScreen">
@@ -609,5 +1112,46 @@
     </div>
 
     <script src="script.js"></script>
+    <script>
+    (function() {
+        /* --- Header hide on scroll --- */
+        const header = document.querySelector('.header');
+        let lastY = 0, ticking = false;
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                requestAnimationFrame(function() {
+                    const y = window.scrollY;
+                    header.classList.toggle('hidden', y > lastY && y > 60);
+                    header.classList.toggle('scrolled', y > 10);
+                    lastY = y;
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+
+        /* --- Scroll reveal --- */
+        const revealEls = document.querySelectorAll('.reveal, .reveal-stagger');
+        const io = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    io.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12 });
+        revealEls.forEach(function(el) { io.observe(el); });
+
+        /* --- FAQ Accordion --- */
+        document.querySelectorAll('.faq-q').forEach(function(q) {
+            q.addEventListener('click', function() {
+                var item = q.closest('.faq-item');
+                var isOpen = item.classList.contains('open');
+                document.querySelectorAll('.faq-item.open').forEach(function(i){ i.classList.remove('open'); });
+                if (!isOpen) item.classList.add('open');
+            });
+        });
+    })();
+    </script>
 </body>
 </html>
