@@ -657,8 +657,127 @@
             background: #b8932f;
         }
 
+        /* ===== INSTAGRAM SECTION ===== */
+        .instagram-section {
+            max-width: 900px;
+            margin: 64px auto 0;
+            padding: 0 24px;
+        }
+        .instagram-inner {
+            background: linear-gradient(135deg, #833AB4, #E1306C, #F77737, #FFDC80);
+            border-radius: 24px;
+            padding: 48px 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        .instagram-inner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%);
+            animation: shimmerInsta 8s ease-in-out infinite;
+        }
+        @keyframes shimmerInsta {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, 30px); }
+        }
+        .instagram-icon-wrap {
+            width: 96px;
+            height: 96px;
+            background: #fff;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+            animation: floatInsta 3s ease-in-out infinite;
+            z-index: 1;
+        }
+        @keyframes floatInsta {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(3deg); }
+        }
+        .instagram-icon-wrap i {
+            font-size: 3.2rem;
+            background: linear-gradient(135deg, #833AB4, #E1306C, #F77737);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .instagram-text {
+            z-index: 1;
+        }
+        .instagram-text h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .instagram-text p {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.9);
+            max-width: 480px;
+            margin: 0 auto;
+        }
+        .instagram-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: #fff;
+            color: #262626;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            padding: 16px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            transition: transform .25s, box-shadow .25s;
+            z-index: 1;
+        }
+        .instagram-btn:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.28);
+        }
+        .instagram-btn i {
+            font-size: 1.3rem;
+        }
+
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
+            .instagram-inner {
+                padding: 36px 24px;
+            }
+            .instagram-icon-wrap {
+                width: 80px;
+                height: 80px;
+                border-radius: 20px;
+            }
+            .instagram-icon-wrap i {
+                font-size: 2.6rem;
+            }
+            .instagram-text h2 {
+                font-size: 1.5rem;
+            }
+            .instagram-text p {
+                font-size: 0.92rem;
+            }
+            .instagram-btn {
+                padding: 14px 28px;
+                font-size: 0.95rem;
+            }
+
             .nav-menu { display: none; }
             .hamburger { display: flex; }
 
@@ -1026,6 +1145,23 @@
                     <button type="submit" class="btn-comecar solid">Enviar Mensagem <i class="bi bi-send"></i></button>
                 </form>
             </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO SIGA-NOS NO INSTAGRAM -->
+    <section class="instagram-section reveal">
+        <div class="instagram-inner">
+            <div class="instagram-icon-wrap">
+                <i class="bi bi-instagram"></i>
+            </div>
+            <div class="instagram-text">
+                <h2>Siga-nos no Instagram</h2>
+                <p>Conteúdos exclusivos sobre relacionamentos, dicas práticas e inspirações para fortalecer o seu casamento.</p>
+            </div>
+            <a href="https://www.instagram.com/williampaixaomentordecasais" target="_blank" class="instagram-btn">
+                <i class="bi bi-instagram"></i>
+                Seguir Agora
+            </a>
         </div>
     </section>
 
