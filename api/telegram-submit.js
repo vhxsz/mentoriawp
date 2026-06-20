@@ -121,7 +121,9 @@ module.exports = async function handler(req, res) {
       });
       res.status(502).json({
         ok: false,
-        error: 'Telegram nao confirmou o envio. Verifique token, chat ID e permissao do bot.',
+        error: telegramData && telegramData.description
+          ? `Telegram: ${telegramData.description}`
+          : 'Telegram nao confirmou o envio. Verifique token, chat ID e permissao do bot.',
       });
       return;
     }
