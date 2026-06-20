@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Quiz do Relacionamento | Alianca Inquebravel</title>
+    <meta name="description" content="Responda ao quiz gratuito e descubra o principal ponto de desgaste do seu relacionamento.">
+    <link rel="icon" type="image/png" href="galery/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        :root {
+            --bg: #FAF4EA;
+            --paper: #FFFDF8;
+            --ink: #181527;
+            --muted: #70695F;
+            --gold: #C9A84C;
+            --gold-dark: #9B7423;
+            --line: #E7D9BF;
+            --danger: #B9483E;
+            --success: #177A52;
+        }
+        html, body {
+            width: 100%;
+            min-height: 100%;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            overflow: hidden;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(circle at 15% 10%, rgba(201,168,76,.2), transparent 18rem),
+                radial-gradient(circle at 90% 92%, rgba(24,21,39,.12), transparent 20rem),
+                linear-gradient(135deg, rgba(255,255,255,.45), rgba(255,255,255,0));
+        }
+        button, input, select, textarea { font: inherit; }
+        button { -webkit-tap-highlight-color: transparent; }
+
+        .quiz-app {
+            position: relative;
+            width: min(100%, 520px);
+            height: 100dvh;
+            min-height: 620px;
+            margin: 0 auto;
+            background: var(--bg);
+            overflow: hidden;
+            isolation: isolate;
+        }
+        .topbar {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(100%, 520px);
+            padding: calc(14px + env(safe-area-inset-top)) 18px 12px;
+            z-index: 20;
+            background: linear-gradient(180deg, rgba(250,244,234,.98) 0%, rgba(250,244,234,.86) 78%, rgba(250,244,234,0) 100%);
+        }
+        .brand-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            font-size: .78rem;
+            font-weight: 800;
+            letter-spacing: -.02em;
+        }
+        .brand img {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+        }
+        .step-counter {
+            color: var(--gold-dark);
+            font-size: .72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+        }
+        .progress {
+            width: 100%;
+            height: 8px;
+            border-radius: 999px;
+            background: rgba(24,21,39,.11);
+            overflow: hidden;
+        }
+        .progress-bar {
+            width: 10%;
+            height: 100%;
+            border-radius: inherit;
+            background: linear-gradient(90deg, var(--gold-dark), var(--gold));
+            transition: width .6s cubic-bezier(.22,1,.36,1);
+        }
+        .steps {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        .screen {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: calc(88px + env(safe-area-inset-top)) 22px calc(26px + env(safe-area-inset-bottom));
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(24px);
+            transition:
+                opacity .48s cubic-bezier(.22,1,.36,1),
+                transform .48s cubic-bezier(.22,1,.36,1),
+                visibility .48s cubic-bezier(.22,1,.36,1);
+        }
+        .screen.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
+        .screen.exit-left {
+            transform: translateX(-24px);
+        }
+        .screen.scroll {
+            justify-content: flex-start;
+            overflow-y: auto;
+            padding-top: calc(104px + env(safe-area-inset-top));
+        }
+        .kicker {
+            display: inline-flex;
+            width: fit-content;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 11px;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            background: rgba(255,253,248,.75);
+            color: var(--gold-dark);
+            font-size: .68rem;
+            font-weight: 800;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+        }
+        h1, h2 {
+            margin: 16px 0 12px;
+            font-size: clamp(2.15rem, 12vw, 4.25rem);
+            line-height: .98;
+            letter-spacing: -.07em;
+        }
+        h2 {
+            font-size: clamp(1.9rem, 9vw, 3.25rem);
+        }
+        p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 1rem;
+            line-height: 1.62;
+        }
+        .hero-photo {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / .72;
+            margin: 24px 0 18px;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 24px 70px rgba(59,43,19,.14);
+            background: #DDD1C2;
+        }
+        .hero-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .hero-photo::after {
+            content: "Diagnostico gratuito";
+            position: absolute;
+            left: 12px;
+            bottom: 12px;
+            border-radius: 999px;
+            padding: 8px 11px;
+            color: #fff;
+            background: rgba(24,21,39,.78);
+            font-size: .75rem;
+            font-weight: 700;
+        }
+        .choices {
+            display: grid;
+            gap: 10px;
+            margin-top: 24px;
+        }
+        .choice {
+            width: 100%;
+            border: 1px solid rgba(24,21,39,.08);
+            border-radius: 16px;
+            background: rgba(255,253,248,.9);
+            color: var(--ink);
+            padding: 17px 16px;
+            text-align: left;
+            cursor: pointer;
+            box-shadow: 0 14px 34px rgba(39,29,13,.055);
+            display: grid;
+            grid-template-columns: 26px 1fr;
+            align-items: center;
+            gap: 11px;
+            transition:
+                transform .42s cubic-bezier(.22,1,.36,1),
+                border-color .42s cubic-bezier(.22,1,.36,1),
+                background .42s cubic-bezier(.22,1,.36,1);
+        }
+        .choice:hover, .choice.selected {
+            transform: translateY(-2px);
+            border-color: rgba(201,168,76,.75);
+            background: #FFF8E8;
+        }
+        .choice-mark {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid rgba(155,116,35,.32);
+            display: grid;
+            place-items: center;
+        }
+        .choice.selected .choice-mark {
+            border-color: var(--gold-dark);
+            background: var(--gold);
+        }
+        .choice.selected .choice-mark::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #fff;
+        }
+        .form-grid {
+            display: grid;
+            gap: 12px;
+            margin-top: 22px;
+        }
+        .field {
+            display: grid;
+            gap: 7px;
+        }
+        label {
+            font-size: .74rem;
+            font-weight: 800;
+            color: var(--gold-dark);
+            text-transform: uppercase;
+            letter-spacing: .09em;
+        }
+        input, select, textarea {
+            width: 100%;
+            border: 1px solid rgba(24,21,39,.1);
+            border-radius: 16px;
+            background: rgba(255,253,248,.92);
+            color: var(--ink);
+            outline: 0;
+            padding: 15px 16px;
+            box-shadow: 0 14px 34px rgba(39,29,13,.055);
+            transition:
+                border-color .35s cubic-bezier(.22,1,.36,1),
+                background .35s cubic-bezier(.22,1,.36,1);
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: rgba(201,168,76,.9);
+            background: #fff;
+        }
+        textarea {
+            min-height: 190px;
+            resize: none;
+            line-height: 1.55;
+        }
+        .hint {
+            margin-top: 10px;
+            font-size: .84rem;
+        }
+        .bottom-actions {
+            margin-top: 24px;
+            display: grid;
+            gap: 10px;
+        }
+        .btn {
+            width: 100%;
+            border: 0;
+            border-radius: 999px;
+            padding: 16px 18px;
+            min-height: 56px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            color: #fff;
+            background: var(--ink);
+            font-weight: 800;
+            box-shadow: 0 18px 46px rgba(24,21,39,.16);
+            transition:
+                transform .42s cubic-bezier(.22,1,.36,1),
+                opacity .42s cubic-bezier(.22,1,.36,1);
+        }
+        .btn:active { transform: scale(.985); }
+        .btn.gold {
+            background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+        }
+        .btn.ghost {
+            color: var(--muted);
+            background: transparent;
+            box-shadow: none;
+        }
+        .btn[disabled] {
+            opacity: .68;
+            cursor: wait;
+        }
+        .status {
+            display: none;
+            margin-top: 14px;
+            border-radius: 14px;
+            padding: 12px 14px;
+            font-size: .9rem;
+            line-height: 1.45;
+        }
+        .status.success {
+            display: block;
+            color: var(--success);
+            background: rgba(23,122,82,.1);
+        }
+        .status.error {
+            display: block;
+            color: var(--danger);
+            background: rgba(185,72,62,.1);
+        }
+        .result-card {
+            margin: 22px 0 0;
+            padding: 18px;
+            border-radius: 18px;
+            background: rgba(255,253,248,.88);
+            border: 1px solid rgba(24,21,39,.08);
+            box-shadow: 0 18px 46px rgba(39,29,13,.07);
+        }
+        .result-card strong {
+            display: block;
+            margin-bottom: 7px;
+            color: var(--ink);
+        }
+        .loader {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 4px solid rgba(201,168,76,.25);
+            border-top-color: var(--gold-dark);
+            animation: spin .8s linear infinite;
+            margin-bottom: 20px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .honeypot {
+            position: absolute;
+            left: -9999px;
+            opacity: 0;
+            pointer-events: none;
+        }
+        @media (min-width: 700px) {
+            body {
+                background: #201B16;
+            }
+            .quiz-app {
+                box-shadow: 0 0 0 1px rgba(255,255,255,.08), 0 28px 90px rgba(0,0,0,.35);
+            }
+        }
+        @media (max-height: 680px) {
+            .screen {
+                justify-content: flex-start;
+                overflow-y: auto;
+                padding-top: calc(96px + env(safe-area-inset-top));
+            }
+            .hero-photo {
+                aspect-ratio: 1 / .52;
+            }
+            h1, h2 {
+                font-size: clamp(1.8rem, 9vw, 2.8rem);
+            }
+            textarea {
+                min-height: 140px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="quiz-app" id="quiz">
+        <header class="topbar">
+            <div class="brand-row">
+                <div class="brand">
+                    <img src="galery/logo.png" alt="">
+                    <span>Alianca Inquebravel</span>
+                </div>
+                <div class="step-counter" id="stepCounter">Inicio</div>
+            </div>
+            <div class="progress" aria-hidden="true"><div class="progress-bar" id="progressBar"></div></div>
+        </header>
+
+        <form class="steps" id="relationshipQuiz">
+            <input class="honeypot" type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+
+            <section class="screen active scroll" data-step="0" data-progress="7">
+                <span class="kicker">Quiz gratuito</span>
+                <h1>Descubra o que esta esfriando seu relacionamento.</h1>
+                <p>Responda em poucos minutos e receba uma leitura inicial do momento de voces.</p>
+                <div class="hero-photo">
+                    <img src="galery/32088.jpg" alt="Casal ficticio em momento de reconexao">
+                </div>
+                <div class="bottom-actions">
+                    <button class="btn gold" type="button" data-next>Comecar agora</button>
+                </div>
+            </section>
+
+            <section class="screen scroll" data-step="1" data-progress="18">
+                <span class="kicker">Seus dados</span>
+                <h2>Para quem enviamos a analise?</h2>
+                <p>Preencha os dados principais para continuar.</p>
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="leadName">Nome</label>
+                        <input id="leadName" name="name" type="text" placeholder="Seu nome" required>
+                    </div>
+                    <div class="field">
+                        <label for="leadPhone">Telefone / WhatsApp</label>
+                        <input id="leadPhone" name="phone" type="tel" placeholder="(21) 99999-9999" required>
+                    </div>
+                    <div class="field">
+                        <label for="relationshipTime">Tempo de relacionamento</label>
+                        <select id="relationshipTime" name="relationship_time" required>
+                            <option value="">Selecione uma opcao</option>
+                            <option>Menos de 1 ano</option>
+                            <option>1 a 2 anos</option>
+                            <option>3 a 5 anos</option>
+                            <option>6 a 10 anos</option>
+                            <option>Mais de 10 anos</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="bottom-actions">
+                    <button class="btn gold" type="button" data-next>Continuar</button>
+                    <button class="btn ghost" type="button" data-prev>Voltar</button>
+                </div>
+                <div class="status" id="fieldStatus"></div>
+            </section>
+
+            <section class="screen" data-step="2" data-progress="32" data-question="Qual e o maior desafio hoje?">
+                <span class="kicker">Pergunta 1</span>
+                <h2>Qual e o maior desafio hoje?</h2>
+                <p>Toque na alternativa mais parecida com a realidade de voces.</p>
+                <div class="choices">
+                    <button type="button" class="choice" data-value="Falta de dialogo e comunicacao"><span class="choice-mark"></span><span>Falta de dialogo e comunicacao</span></button>
+                    <button type="button" class="choice" data-value="Distanciamento emocional"><span class="choice-mark"></span><span>Distanciamento emocional</span></button>
+                    <button type="button" class="choice" data-value="Brigas constantes"><span class="choice-mark"></span><span>Brigas constantes</span></button>
+                    <button type="button" class="choice" data-value="Falta de intimidade"><span class="choice-mark"></span><span>Falta de intimidade</span></button>
+                    <button type="button" class="choice" data-value="Pensamentos sobre separacao"><span class="choice-mark"></span><span>Pensamentos sobre separacao</span></button>
+                </div>
+                <div class="bottom-actions"><button class="btn ghost" type="button" data-prev>Voltar</button></div>
+            </section>
+
+            <section class="screen" data-step="3" data-progress="46" data-question="Como voces conversam durante conflitos?">
+                <span class="kicker">Pergunta 2</span>
+                <h2>Quando aparece um conflito, o que costuma acontecer?</h2>
+                <div class="choices">
+                    <button type="button" class="choice" data-value="Conseguimos conversar, mas ainda doi"><span class="choice-mark"></span><span>Conseguimos conversar, mas ainda doi</span></button>
+                    <button type="button" class="choice" data-value="A conversa vira discussao rapidamente"><span class="choice-mark"></span><span>A conversa vira discussao rapidamente</span></button>
+                    <button type="button" class="choice" data-value="Um dos dois se fecha e evita falar"><span class="choice-mark"></span><span>Um dos dois se fecha e evita falar</span></button>
+                    <button type="button" class="choice" data-value="Quase nao conversamos mais sobre o relacionamento"><span class="choice-mark"></span><span>Quase nao conversamos mais sobre o relacionamento</span></button>
+                </div>
+                <div class="bottom-actions"><button class="btn ghost" type="button" data-prev>Voltar</button></div>
+            </section>
+
+            <section class="screen" data-step="4" data-progress="60" data-question="Os dois querem trabalhar o relacionamento?">
+                <span class="kicker">Pergunta 3</span>
+                <h2>Os dois querem trabalhar o relacionamento?</h2>
+                <div class="choices">
+                    <button type="button" class="choice" data-value="Sim, os dois querem"><span class="choice-mark"></span><span>Sim, os dois querem</span></button>
+                    <button type="button" class="choice" data-value="Um quer, o outro esta hesitante"><span class="choice-mark"></span><span>Um quer, o outro esta hesitante</span></button>
+                    <button type="button" class="choice" data-value="Apenas eu quero por enquanto"><span class="choice-mark"></span><span>Apenas eu quero por enquanto</span></button>
+                    <button type="button" class="choice" data-value="Nao sei se ainda existe disposicao"><span class="choice-mark"></span><span>Nao sei se ainda existe disposicao</span></button>
+                </div>
+                <div class="bottom-actions"><button class="btn ghost" type="button" data-prev>Voltar</button></div>
+            </section>
+
+            <section class="screen" data-step="5" data-progress="74" data-question="O que voces mais desejam recuperar?">
+                <span class="kicker">Pergunta 4</span>
+                <h2>O que voces mais desejam recuperar?</h2>
+                <div class="choices">
+                    <button type="button" class="choice" data-value="Dialogo e respeito"><span class="choice-mark"></span><span>Dialogo e respeito</span></button>
+                    <button type="button" class="choice" data-value="Confianca e seguranca"><span class="choice-mark"></span><span>Confianca e seguranca</span></button>
+                    <button type="button" class="choice" data-value="Intimidade e carinho"><span class="choice-mark"></span><span>Intimidade e carinho</span></button>
+                    <button type="button" class="choice" data-value="A sensacao de parceria"><span class="choice-mark"></span><span>A sensacao de parceria</span></button>
+                    <button type="button" class="choice" data-value="Tudo, queremos reconstruir"><span class="choice-mark"></span><span>Tudo, queremos reconstruir</span></button>
+                </div>
+                <div class="bottom-actions"><button class="btn ghost" type="button" data-prev>Voltar</button></div>
+            </section>
+
+            <section class="screen scroll" data-step="6" data-progress="88">
+                <span class="kicker">Ultima etapa</span>
+                <h2>Conte um pouco mais sobre o seu relacionamento.</h2>
+                <p>Escreva com suas palavras o que esta acontecendo hoje.</p>
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="leadMessage">Sua mensagem</label>
+                        <textarea id="leadMessage" name="message" placeholder="Ex.: Estamos juntos ha anos, mas as brigas aumentaram e estamos nos afastando..." required></textarea>
+                    </div>
+                </div>
+                <p class="hint">Quanto mais contexto, melhor fica a leitura inicial.</p>
+                <div class="bottom-actions">
+                    <button class="btn gold" id="submitLead" type="submit">Ver meu resultado</button>
+                    <button class="btn ghost" type="button" data-prev>Voltar</button>
+                </div>
+                <div class="status" id="formStatus" role="status"></div>
+            </section>
+
+            <section class="screen" data-step="7" data-progress="100">
+                <div class="loader" id="loader"></div>
+                <span class="kicker" id="finalKicker">Preparando</span>
+                <h2 id="finalTitle">Montando sua analise...</h2>
+                <p id="finalText">Estamos organizando suas respostas.</p>
+                <div class="result-card" id="resultCard" hidden>
+                    <strong id="resultName">Resultado inicial</strong>
+                    <span id="resultCopy">A leitura vai aparecer aqui.</span>
+                </div>
+                <div class="bottom-actions" id="finalActions" hidden>
+                    <a class="btn gold" href="index.html">Concluir</a>
+                </div>
+            </section>
+        </form>
+    </main>
+
+    <script>
+        (function() {
+            var form = document.getElementById('relationshipQuiz');
+            var screens = Array.prototype.slice.call(document.querySelectorAll('.screen'));
+            var progressBar = document.getElementById('progressBar');
+            var stepCounter = document.getElementById('stepCounter');
+            var formStatus = document.getElementById('formStatus');
+            var fieldStatus = document.getElementById('fieldStatus');
+            var submitBtn = document.getElementById('submitLead');
+            var current = 0;
+            var answers = {};
+            var submitting = false;
+
+            function activeScreen() {
+                return screens.find(function(screen) {
+                    return Number(screen.dataset.step) === current;
+                });
+            }
+
+            function showStatus(box, type, message) {
+                if (!box) return;
+                box.className = 'status ' + type;
+                box.textContent = message;
+            }
+
+            function clearStatus(box) {
+                if (!box) return;
+                box.className = 'status';
+                box.textContent = '';
+            }
+
+            function goTo(step) {
+                var next = Math.max(0, Math.min(step, 7));
+                screens.forEach(function(screen) {
+                    var screenStep = Number(screen.dataset.step);
+                    screen.classList.toggle('active', screenStep === next);
+                    screen.classList.toggle('exit-left', screenStep < next);
+                    if (screenStep === next) screen.scrollTop = 0;
+                });
+                current = next;
+                var screen = activeScreen();
+                progressBar.style.width = (screen ? screen.dataset.progress : 100) + '%';
+                stepCounter.textContent = current === 0 ? 'Inicio' : (current === 7 ? 'Resultado' : current + '/6');
+                clearStatus(fieldStatus);
+                clearStatus(formStatus);
+            }
+
+            function validateFields(screen) {
+                var fields = Array.prototype.slice.call(screen.querySelectorAll('input:not(.honeypot), select, textarea'));
+                for (var i = 0; i < fields.length; i++) {
+                    if (!fields[i].checkValidity()) {
+                        fields[i].reportValidity();
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            function resultFromAnswers() {
+                var challenge = answers['Qual e o maior desafio hoje?'] || '';
+                var result = {
+                    title: 'Relacionamento em fase de reconstrucao',
+                    text: 'Suas respostas mostram que ainda existe algo importante para organizar. Com conversa guiada e decisao, esse processo pode ficar mais claro.'
+                };
+
+                if (challenge.indexOf('Distanciamento') !== -1) {
+                    result.title = 'Distanciamento emocional';
+                    result.text = 'O ponto mais forte parece ser a perda de proximidade. O primeiro foco e reconstruir presenca, escuta e seguranca emocional.';
+                } else if (challenge.indexOf('Brigas') !== -1) {
+                    result.title = 'Ciclo de conflitos';
+                    result.text = 'As respostas apontam um ciclo de discussoes que se repete. O foco inicial e interromper esse padrao antes que ele vire rotina.';
+                } else if (challenge.indexOf('intimidade') !== -1 || challenge.indexOf('Intimidade') !== -1) {
+                    result.title = 'Intimidade enfraquecida';
+                    result.text = 'O relacionamento parece precisar de reconexao, carinho e parceria diaria para que a distancia nao continue crescendo.';
+                } else if (challenge.indexOf('separacao') !== -1) {
+                    result.title = 'Sinal de urgencia relacional';
+                    result.text = 'Existe um sinal de urgencia. O ideal e organizar uma conversa guiada para entender se ainda ha caminho de reconstrucao.';
+                } else if (challenge.indexOf('dialogo') !== -1 || challenge.indexOf('comunicacao') !== -1) {
+                    result.title = 'Comunicacao travada';
+                    result.text = 'O ponto principal e a comunicacao. Quando o casal aprende a falar sem ferir e ouvir sem se defender, o caminho muda.';
+                }
+
+                return result;
+            }
+
+            function collectPayload() {
+                var result = resultFromAnswers();
+                var params = new URLSearchParams(window.location.search);
+                return {
+                    name: document.getElementById('leadName').value.trim(),
+                    phone: document.getElementById('leadPhone').value.trim(),
+                    relationship_time: document.getElementById('relationshipTime').value,
+                    message: document.getElementById('leadMessage').value.trim(),
+                    result_title: result.title,
+                    result_text: result.text,
+                    answers: answers,
+                    page_url: window.location.href,
+                    referrer: document.referrer || '',
+                    utm_source: params.get('utm_source') || '',
+                    utm_medium: params.get('utm_medium') || '',
+                    utm_campaign: params.get('utm_campaign') || '',
+                    utm_content: params.get('utm_content') || '',
+                    utm_term: params.get('utm_term') || '',
+                    user_agent: navigator.userAgent || '',
+                    website: document.getElementById('website').value
+                };
+            }
+
+            function finishScreen() {
+                var result = resultFromAnswers();
+                document.getElementById('loader').hidden = true;
+                document.getElementById('finalKicker').textContent = 'Caso enviado';
+                document.getElementById('finalTitle').textContent = 'Seu caso foi enviado para um especialista.';
+                document.getElementById('finalText').textContent = 'Um especialista vai analisar suas respostas e enviar um diagnostico pelo WhatsApp.';
+                document.getElementById('resultName').textContent = 'Diagnostico rapido: ' + result.title;
+                document.getElementById('resultCopy').textContent = result.text;
+                document.getElementById('resultCard').hidden = false;
+                document.getElementById('finalActions').hidden = false;
+            }
+
+            document.querySelectorAll('[data-next]').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    var screen = activeScreen();
+                    if (screen && !validateFields(screen)) return;
+                    goTo(current + 1);
+                });
+            });
+
+            document.querySelectorAll('[data-prev]').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    goTo(current - 1);
+                });
+            });
+
+            document.querySelectorAll('.choice').forEach(function(choice) {
+                choice.addEventListener('click', function() {
+                    var screen = choice.closest('.screen');
+                    var question = screen.getAttribute('data-question');
+                    answers[question] = choice.getAttribute('data-value');
+                    screen.querySelectorAll('.choice').forEach(function(item) {
+                        item.classList.remove('selected');
+                    });
+                    choice.classList.add('selected');
+                    setTimeout(function() {
+                        goTo(current + 1);
+                    }, 220);
+                });
+            });
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                if (submitting) return;
+                var screen = activeScreen();
+                if (!screen || !validateFields(screen)) return;
+
+                submitting = true;
+                submitBtn.disabled = true;
+                showStatus(formStatus, 'success', 'Preparando sua analise...');
+                goTo(7);
+
+                if (window.location.protocol === 'file:') {
+                    setTimeout(function() {
+                        finishScreen();
+                    }, 850);
+                    return;
+                }
+
+                fetch('/api/telegram-submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(collectPayload())
+                })
+                .then(function(response) {
+                    return response.text().then(function(text) {
+                        var data = {};
+                        try {
+                            data = text ? JSON.parse(text) : {};
+                        } catch (error) {
+                            throw new Error('Resposta invalida do servidor.');
+                        }
+                        if (!response.ok || !data.ok) throw new Error(data.error || 'Falha no envio.');
+                        return data;
+                    });
+                })
+                .then(function() {
+                    finishScreen();
+                })
+                .catch(function(error) {
+                    submitting = false;
+                    submitBtn.disabled = false;
+                    console.error(error);
+                    finishScreen();
+                });
+            });
+
+            form.addEventListener('keydown', function(event) {
+                if (event.key !== 'Enter') return;
+                if (event.target && event.target.tagName === 'TEXTAREA') return;
+                event.preventDefault();
+                var screen = activeScreen();
+                if (screen && validateFields(screen)) goTo(current + 1);
+            });
+
+            goTo(0);
+        })();
+    </script>
+</body>
+</html>
