@@ -99,25 +99,44 @@ module.exports = async function handler(req, res) {
     message += `<b>IP:</b> ${h(ip)}\n`;
     message += `<b>Data:</b> ${new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}`;
 
-    const telegramResponse = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: message,
-        parse_mode: 'HTML',
-        disable_web_page_preview: true,
-      }),
-    });
+    async function sendToTelegram(targetChatId) {
+      const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: targetChatId,
+          text: message,
+          parse_mode: 'HTML',
+          disable_web_page_preview: true,
+        }),
+      });
 
-    const telegramData = await telegramResponse.json().catch(() => null);
+      const data = await response.json().catch(() => null);
+      return { response, data, targetChatId };
+    }
+
+    let telegramResult = await sendToTelegram(chatId);
+    let migratedChatId = telegramResult.data
+      && telegramResult.data.parameters
+      && telegramResult.data.parameters.migrate_to_chat_id;
+
+    if (!telegramResult.response.ok && migratedChatId) {
+      console.warn('Telegram group migrated to supergroup chat', {
+        oldChatId: chatId,
+        migratedChatId,
+      });
+      telegramResult = await sendToTelegram(String(migratedChatId));
+    }
+
+    const telegramResponse = telegramResult.response;
+    const telegramData = telegramResult.data;
 
     if (!telegramResponse.ok || !telegramData || !telegramData.ok) {
       console.error('Telegram sendMessage failed', {
         status: telegramResponse.status,
         statusText: telegramResponse.statusText,
         telegramData,
-        chatId,
+        chatId: telegramResult.targetChatId,
       });
       res.status(502).json({
         ok: false,
@@ -128,7 +147,10 @@ module.exports = async function handler(req, res) {
       return;
     }
 
-    res.status(200).json({ ok: true });
+    res.status(200).json({
+      ok: true,
+      migrated_chat_id: migratedChatId ? String(migratedChatId) : undefined,
+    });
   } catch (error) {
     console.error('Unexpected lead API error', error);
     res.status(500).json({ ok: false, error: 'Erro interno ao enviar lead.' });
